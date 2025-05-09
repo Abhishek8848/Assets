@@ -154,9 +154,9 @@ jobs:
               testcases = suite.get("testcase", [])
               if isinstance(testcases, dict):
                   testcases = [testcases]
-              count = 0 
+              
               for testcase in testcases:
-                  count += 1 
+                  print("Processing Test Case:", testcase)  
                   test_name = testcase.get("@name", "Unknown")
                   error_info = testcase.get("error", "Unknown")
                   type_value = error_info.get("#text", "Unknown") if isinstance(error_info, dict) else "Unknown"
