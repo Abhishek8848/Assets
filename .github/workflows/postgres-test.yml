@@ -167,7 +167,7 @@ jobs:
                   test_results.append([test_name, status, traceback,app_name])
                   
           # Convert to CSV
-          df = pd.DataFrame(test_results, columns=["Test Name", "Status", "Traceback", App Name])
+          df = pd.DataFrame(test_results, columns=["Test Name", "Status", "Traceback", "App Name"])
           df.to_csv("/home/runner/frappe-bench/test_report.csv", index=False)
           EOF
       - name: Upload CSV Test Report
