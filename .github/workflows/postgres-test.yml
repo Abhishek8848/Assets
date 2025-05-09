@@ -164,10 +164,11 @@ jobs:
                   traceback = type_value if status == "Failed" else ""
                   file_path = testcase.get("@file", "")
                   app_name = file_path.split("/apps/")[1].split("/")[0] if "/apps/" in file_path else "Unknown"
-                  test_results.append([test_name, status, traceback,app_name])
+                  test_full_path = testcase.get("@classname", "Unknown")
+                  test_results.append([test_name, status, traceback,app_name,test_full_path])
                   
           # Convert to CSV
-          df = pd.DataFrame(test_results, columns=["Test Name", "Status", "Traceback", "App Name"])
+          df = pd.DataFrame(test_results, columns=["Test Name", "Status", "Traceback", "App Name", "Test Full Path"])
           df.to_csv("/home/runner/frappe-bench/test_report.csv", index=False)
           EOF
       - name: Upload CSV Test Report
