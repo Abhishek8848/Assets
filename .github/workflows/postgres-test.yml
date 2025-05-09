@@ -156,17 +156,18 @@ jobs:
                   testcases = [testcases]
               
               for testcase in testcases:
-                  print("Processing Test Case:", testcase)  
                   test_name = testcase.get("@name", "Unknown")
                   error_info = testcase.get("error", "Unknown")
                   type_value = error_info.get("#text", "Unknown") if isinstance(error_info, dict) else "Unknown"
                   # Determine pass/fail status
                   status = "Failed" if type_value != "Unknown" else "Passed"
                   traceback = type_value if status == "Failed" else ""
-                  test_results.append([test_name, status, traceback])
+                  file_path = testcase.get("@file", "")
+                  app_name = file_path.split("/apps/")[1].split("/")[0] if "/apps/" in file_path else "Unknown"
+                  test_results.append([test_name, status, traceback,app_name])
                   
           # Convert to CSV
-          df = pd.DataFrame(test_results, columns=["Test Name", "Status", "Traceback"])
+          df = pd.DataFrame(test_results, columns=["Test Name", "Status", "Traceback", App Name])
           df.to_csv("/home/runner/frappe-bench/test_report.csv", index=False)
           EOF
       - name: Upload CSV Test Report
